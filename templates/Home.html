@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="bg-black text-white">
+    <div class="grid w-screen h-screen gap-1 grid-cols-[0fr_7fr_0fr] grid-rows-[4rem_auto_2rem]">
+        <!-- Top Row -->
+        <nav class="col-span-3 row-start-1 bg-red-900 text-white p-2">
+          <div class="flex justify-between items-center">
+    
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-md">
+              <input
+                type="text"
+                class="w-full px-4 py-2 bg-black text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                placeholder="Search..."
+              />
+              <div id="dropdown" class="absolute left-0 right-0 mt-2 bg-black border border-gray-700 rounded-md shadow-lg hidden">
+                <ul>
+                  <li class="px-4 py-2 text-white hover:bg-gray-700">
+                    Suggestion 1LONGLONG1LONGLONG1LONGLONG1LONGLONG1LONGLONG1LONGLONG
+                  </li>
+                  <li class="px-4 py-2 text-white hover:bg-gray-700">Suggestion 2</li>
+                  <li class="px-4 py-2 text-white hover:bg-gray-700">Suggestion 3</li>
+                </ul>
+              </div>
+            </div>
+    
+            <!-- Breadcrumb Menu (Right Side) -->
+            <div class="text-right text-sm">
+              <nav aria-label="breadcrumb">
+                <ol class="flex justify-end space-x-2 text-gray-300">
+                  <li><a href="#" class="hover:text-white">Home</a></li>
+                  <li><span>/</span></li>
+                  <li><a href="#" class="hover:text-white">Projects</a></li>
+                  <li><span>/</span></li>
+                  <li><a href="#" class="hover:text-white">Current Page</a></li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </nav>
+    
+        <!-- Middle Row -->
+        <div class="flex col-start-2 row-start-2 bg-black h-full">
+          <!-- Sidebar -->
+          <div class="w-40 bg-black p-4 h-full">
+            <ul class="text-white">
+              <li class="mb-4">
+                <a href="#" class="hover:bg-gray-700 p-2 text-gray-400 rounded">Create Article</a>
+              </li>
+              <li class="mb-4">
+                <a href="#" class="hover:bg-gray-700 p-2 text-gray-400 rounded">Categories</a>
+              </li>
+              <li class="mb-4">
+                <a href="notes/view/" class="hover:bg-gray-700 p-2 text-gray-400 rounded">Notes</a>
+              </li>
+              <li class="mb-4">
+                <a href="#" class="hover:bg-gray-700 p-2 text-gray-400 rounded">Random Article</a>
+              </li>
+            </ul>
+          </div>
+    
+          <!-- Main Content Area (Square) -->
+          <div class="flex-1 bg-black p-4 h-full">
+            <div class="container mr-auto w-100 px-4 py-8">
+              <div class="bg-red-900 text-black rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-center py-4">Recent Updates</h2>
+                <ul id="updates-list" class="space-y-4 p-4">
+                  <li class="bg-red-800 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold">Update Title</h3>
+                    <p class="text-sm text-gray-400">Short description of the update...</p>
+                    <span class="text-xs text-gray-500">Posted on April 8, 2025</span>
+                  </li>
+                  <li class="bg-red-800 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold">Update Title</h3>
+                    <p class="text-sm text-gray-400">Short description of the update...</p>
+                    <span class="text-xs text-gray-500">Posted on April 8, 2025</span>
+                  </li>
+                  <li class="bg-red-800 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold">Update Title</h3>
+                    <p class="text-sm text-gray-400">Short description of the update...</p>
+                    <span class="text-xs text-gray-500">Posted on April 8, 2025</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Featured Articles -->
+          <div class="flex-1 bg-black p-4 h-full">
+            <div class="container mr-auto w-100 px-4 py-8">
+              <div class="bg-red-900 text-black rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-center py-4">Featured Articles</h2>
+                <ul id="updates-list" class="space-y-4 p-4">
+                  <li class="bg-red-800 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold">Update Title</h3>
+                    <p class="text-sm text-gray-400">Short description of the update...</p>
+                    <span class="text-xs text-gray-500">Posted on April 8, 2025</span>
+                  </li>
+                  <li class="bg-red-800 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold">Update Title</h3>
+                    <p class="text-sm text-gray-400">Short description of the update...</p>
+                    <span class="text-xs text-gray-500">Posted on April 8, 2025</span>
+                  </li>
+                  <li class="bg-red-800 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold">Update Title</h3>
+                    <p class="text-sm text-gray-400">Short description of the update...</p>
+                    <span class="text-xs text-gray-500">Posted on April 8, 2025</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Random Notes -->
+          <div class="flex-1 bg-black p-4 h-full">
+            <div class="container mr-auto w-100 px-4 py-8">
+              <div class="bg-red-900 text-black rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-center py-4">Random Notes</h2>
+                <ul id="updates-list" class="space-y-4 p-4">
+                  <li class="bg-red-800 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold">Update Title</h3>
+                    <p class="text-sm text-gray-400">Short description of the update...</p>
+                    <span class="text-xs text-gray-500">Posted on April 8, 2025</span>
+                  </li>
+                  <li class="bg-red-800 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold">Update Title</h3>
+                    <p class="text-sm text-gray-400">Short description of the update...</p>
+                    <span class="text-xs text-gray-500">Posted on April 8, 2025</span>
+                  </li>
+                  <li class="bg-red-800 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold">Update Title</h3>
+                    <p class="text-sm text-gray-400">Short description of the update...</p>
+                    <span class="text-xs text-gray-500">Posted on April 8, 2025</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Bottom Row -->
+        <footer class="col-span-3 row-start-3 flex justify-between bg-red-900 text-white text-center p-1 px-7">
+          <div>Copyright 2025 - Clayton Crenshaw</div>
+          <div>About / FAQ</div>
+        </footer>
+      </div>     
+    <script src="index.js"></script>
+  </body>
+</html>
+  

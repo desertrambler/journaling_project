@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="bg-black text-white">
+    <main class="h-screen flex justify-center items-center">
+      <div class="max-w-sm w-full bg-red-900 p-6 rounded-lg shadow-lg">
+        <h2 class="text-3xl font-extrabold text-center mb-6">Login</h2>
+        <form action="#" method="POST">
+          <!-- Username -->
+          <div class="mb-4">
+            <label for="username" class="block text-lg font-medium text-white mb-2">Username</label>
+            <input type="text" id="username" name="username" class="w-full p-3 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" required>
+          </div>
+  
+          <!-- Password -->
+          <div class="mb-6">
+            <label for="password" class="block text-lg font-medium text-white mb-2">Password</label>
+            <input type="password" id="password" name="password" class="w-full p-3 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" required>
+          </div>
+  
+          <!-- Submit Button -->
+          <div class="flex justify-center">
+            <button type="submit" class="w-full py-3 bg-red-700 text-white font-bold rounded-md hover:bg-red-600 transition-colors duration-300">
+              Log In
+            </button>
+          </div>
+        </form>
+  
+        <!-- Forgot Password Link -->
+        <div class="mt-4 text-center">
+          <a href="#" class="text-sm text-white hover:text-gray-400">Forgot password?</a>
+        </div>
+      </div>
+    </main>      
+    <script src="index.js"></script>
+  </body>
+</html>
