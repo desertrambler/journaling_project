@@ -1,58 +1,60 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask import g
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from flask_bcrypt import Bcrypt
+from flask_restful import Api, Resource
 from flask_cors import CORS
 
-class Base(DeclarativeBase):
-  pass
-
-db = SQLAlchemy(model_class=Base)
-
-
+# Setup Flask
 app = Flask(__name__)
 
+# Database configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
-# initialize the app with the extension
-db.init_app(app)
+db = SQLAlchemy(app)
 
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173", "supports_credentials": True}})
-
+# Initialize Bcrypt for password hashing
 bcrypt = Bcrypt(app)
 
-"""
-READ THIS:
-- flask db migrate -m "Added user table"
-- flask db upgrade
-- (if you mess up) flask db downgrade
-"""
+# CORS setup if necessary
+CORS(app)
 
+# Initialize Flask-RESTful API
+api = Api(app)
+
+# User model
 class User(db.Model):
-    id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(unique=True)
-    password: Mapped[str] = mapped_column(unique=False)
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
 
-# with app.app_context():
-   #  db.create_all()
+# Create the database tables
+# Uncomment the next line if running the app for the first time and need to create tables
+# db.create_all()
 
-@app.route("/api/v1/login", methods=["POST"])
-def login_user():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        users = db.session.execute(db.select(User).order_by(User.username)).scalars()
+# Resource for Login
+class LoginResource(Resource):
+    def post(self):
+        data = request.get_json()  # Get the JSON data from the request body
+        
+        # Extract username and password
+        username = data.get("username")
+        password = data.get("password")
+        if not username or not password:
+            return jsonify({"message": "Username and password are required"}), 400
 
-        for user in users:
-            if user.username == username:
-                p_to_decrypt = user.password
-                if bcrypt.check_password_hash(p_to_decrypt, user.password):
-                    return 200
-                else:
-                    return 401
+        # Query the user by username
+        user = User.query.filter_by(username=username).first()
 
-@app.route("api/v1/users/create", methods=["GET", "POST"])
+        # Check if user exists and the password is correct
+        if user and bcrypt.check_password_hash(user.password, password):
+            return jsonify({"message": "Login successful"}), 200
+        else:
+            print("help!")
+            return {"message": "Invalid username or password"}, 401
+
+# Adding the resource to the API
+api.add_resource(LoginResource, '/api/v1/login')
+
+@app.route("/api/v1/users/create", methods=["GET", "POST"])
 def user_create():
     if request.method == "POST":
         user = User(
@@ -62,13 +64,6 @@ def user_create():
         db.session.add(user)
         db.session.commit()
         return "Success!"
-
-@app.route("api/v1/users/read", methods=["GET"])
-def user_list():
-    users = db.session.execute(db.select(User).order_by(User.username)).scalars()
-    for user in users:
-        print(user.id, user.username, user.password)
-    return "hello"
 
 @app.route("/api/v1/home")
 def go_home():
@@ -130,7 +125,7 @@ def get_sign_up_form():
                 password=request.form["signupPassword"],
             )
             if user.username and user.password:
-                pw_hash = bcrypt.generate_password_hash(user.password)
+                pw_hash = bcrypt.generate_password_hash(user.password, 12)
                 user.password = str(pw_hash)
                 db.session.add(user)
                 db.session.commit()
