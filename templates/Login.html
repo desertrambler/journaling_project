@@ -7,11 +7,11 @@
     <title>HTML 5 Boilerplate</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
-  <body class="bg-black text-white">
+  <body class="bg-black text-white" x-data>
     <main class="h-screen flex justify-center items-center">
       <div id="signupContainer" class="max-w-sm w-full bg-red-900 p-6 rounded-lg shadow-lg">
         <h2 class="text-3xl font-extrabold text-center mb-6">Login</h2>
-        <form hx-get="/sign_up/" hx-target="#signupContainer">
+        <form hx-get="/sign_up" action="post" hx-target="#signupContainer" id="loginForm">
           <!-- Username -->
           <div class="mb-4">
             <label for="username" class="block text-lg font-medium text-white mb-2">Username</label>
@@ -26,12 +26,18 @@
   
           <!-- Submit Button -->
           <div class="flex justify-center">
-            <button type="submit" class="w-full py-3 bg-red-700 text-white font-bold rounded-md hover:bg-red-600 transition-colors duration-300">
+            <button type="submit" 
+            x-on:click="document.getElementById('loginForm').removeAttribute('hx-get');"
+            class="w-full py-3 bg-red-700 text-white font-bold rounded-md hover:bg-red-600 transition-colors duration-300">
               Log In
             </button>
           </div>
           <div class="flex justify-center mt-5">
-            <button type="submit" class="w-full py-3 bg-red-700 text-white font-bold rounded-md hover:bg-red-600 transition-colors duration-300">
+            <button 
+              type="submit" 
+              id="signupButton" 
+              x-on:click="document.getElementById('username').required = false;document.getElementById('password').required = false;"
+              class="w-full py-3 bg-red-700 text-white font-bold rounded-md hover:bg-red-600 transition-colors duration-300">
               Sign Up
             </button>
           </div>
@@ -44,7 +50,8 @@
       </div>
     </main>      
     <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
-    <script src="index.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <!--<script src="{{ url_for('static', filename='scripts/login.js') }}"></script>-->
   </body>
 </html>
