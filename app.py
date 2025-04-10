@@ -57,45 +57,49 @@ def user_list():
 def home():
     return render_template("Home.html")
 
-@app.route("/sign_up/get-form", methods=["POST"])
+@app.route("/sign_up/", methods=["POST", "GET"])
 def get_sign_up_form():
-    sign_up_form = '''
-      <div id="signupContainer" class="max-w-sm w-full bg-red-900 p-6 rounded-lg shadow-lg">
-        <h2 class="text-3xl font-extrabold text-center mb-6">Sign Up</h2>
-        <form action="/users/create" method="POST">
-          <!-- Username -->
-          <div class="mb-4">
-            <label for="username" class="block text-lg font-medium text-white mb-2">Username</label>
-            <input type="text" id="username" name="username" class="w-full p-3 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" required>
-          </div>
-  
-          <!-- Password -->
-          <div class="mb-6">
-            <label for="password" class="block text-lg font-medium text-white mb-2">Password</label>
-            <input type="password" id="password" name="password" class="w-full p-3 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" required>
-          </div>
+        if request.method == "POST":
+            sign_up_form = '''
+                  <div id="signupContainer" class="max-w-sm w-full bg-red-900 p-6 rounded-lg shadow-lg">
+                    <h2 class="text-3xl font-extrabold text-center mb-6">Login</h2>
+                    <form x-target="signupContainer" method="get" action="/sign_up/">
+                    <!-- Username -->
+                    <div class="mb-4">
+                        <label for="username" class="block text-lg font-medium text-white mb-2">Username</label>
+                        <input type="text" id="username" name="username" class="w-full p-3 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" required>
+                    </div>
+            
+                    <!-- Password -->
+                    <div class="mb-6">
+                        <label for="password" class="block text-lg font-medium text-white mb-2">Password</label>
+                        <input type="password" id="password" name="password" class="w-full p-3 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" required>
+                    </div>
+            
+                    <!-- Submit Button -->
+                    <div class="flex justify-center">
+                        <button type="submit" class="w-full py-3 bg-red-700 text-white font-bold rounded-md hover:bg-red-600 transition-colors duration-300">
+                        Log In
+                        </button>
+                    </div>
+                    </form>
+            
+                    <!-- Forgot Password Link -->
+                    <div class="mt-4 text-center">
+                    <a href="#" class="text-sm text-white hover:text-gray-400">Forgot password?</a>
+                    </div>
+                </div>
+            '''
+            return sign_up_form
+        else:
+            user = User(
+                username=request.form["username"],
+                password=request.form["password"],
+            )
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('/'))
 
-          <!-- Password -->
-          <div class="mb-6">
-            <label for="confirmation" class="block text-lg font-medium text-white mb-2">Confirm Password</label>
-            <input type="password" id="confirmation" name="confirmation" class="w-full p-3 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" required>
-          </div>
-  
-          <!-- Submit Button -->
-          <div class="flex justify-center">
-            <button type="submit" class="w-full py-3 bg-red-700 text-white font-bold rounded-md hover:bg-red-600 transition-colors duration-300">
-              Log In
-            </button>
-          </div>
-        </form>
-  
-        <!-- Forgot Password Link -->
-        <div class="mt-4 text-center">
-          <a href="#" class="text-sm text-white hover:text-gray-400">Forgot password?</a>
-        </div>
-      </div>
-'''
-    return sign_up_form
 
 
 if __name__ == "__main__":
