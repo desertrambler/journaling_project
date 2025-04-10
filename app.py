@@ -59,7 +59,7 @@ def home():
 
 @app.route("/sign_up/", methods=["POST", "GET"])
 def get_sign_up_form():
-        if request.method == "POST":
+        if request.method == "GET":
             sign_up_form = '''
                   <div id="signupContainer" class="max-w-sm w-full bg-red-900 p-6 rounded-lg shadow-lg">
                     <h2 class="text-3xl font-extrabold text-center mb-6">Login</h2>
@@ -75,11 +75,23 @@ def get_sign_up_form():
                         <label for="password" class="block text-lg font-medium text-white mb-2">Password</label>
                         <input type="password" id="password" name="password" class="w-full p-3 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" required>
                     </div>
+
+                    <div class="mb-6">
+                        <label for="confimation" class="block text-lg font-medium text-white mb-2">Confirm Password</label>
+                        <input type="password" id="confirmation" name="confirmation" class="w-full p-3 border border-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" required>
+                    </div>
             
                     <!-- Submit Button -->
                     <div class="flex justify-center">
                         <button type="submit" class="w-full py-3 bg-red-700 text-white font-bold rounded-md hover:bg-red-600 transition-colors duration-300">
-                        Log In
+                        Return to Log In
+                        </button>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-center mt-5">
+                        <button type="submit" class="w-full py-3 bg-red-700 text-white font-bold rounded-md hover:bg-red-600 transition-colors duration-300">
+                        Sign Up
                         </button>
                     </div>
                     </form>
