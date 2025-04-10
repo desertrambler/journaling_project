@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from flask import g
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from flask_bcrypt import Bcrypt
+from flask_cors import CORS
 
 class Base(DeclarativeBase):
   pass
@@ -16,6 +17,8 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 # initialize the app with the extension
 db.init_app(app)
+
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173", "supports_credentials": True}})
 
 bcrypt = Bcrypt(app)
 
@@ -34,11 +37,9 @@ class User(db.Model):
 # with app.app_context():
    #  db.create_all()
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/api/v1/login", methods=["POST"])
 def login_user():
-    if request.method == "GET":
-        return render_template("Login.html")
-    else:
+    if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
         users = db.session.execute(db.select(User).order_by(User.username)).scalars()
@@ -47,11 +48,11 @@ def login_user():
             if user.username == username:
                 p_to_decrypt = user.password
                 if bcrypt.check_password_hash(p_to_decrypt, user.password):
-                    return redirect(url_for('go_home'))
+                    return 200
                 else:
                     return 401
 
-@app.route("/users/create", methods=["GET", "POST"])
+@app.route("api/v1/users/create", methods=["GET", "POST"])
 def user_create():
     if request.method == "POST":
         user = User(
@@ -62,18 +63,18 @@ def user_create():
         db.session.commit()
         return "Success!"
 
-@app.route("/users/read", methods=["GET"])
+@app.route("api/v1/users/read", methods=["GET"])
 def user_list():
     users = db.session.execute(db.select(User).order_by(User.username)).scalars()
     for user in users:
         print(user.id, user.username, user.password)
     return "hello"
 
-@app.route("/home")
+@app.route("/api/v1/home")
 def go_home():
     return render_template("Home.html")
 
-@app.route("/sign_up", methods=["POST", "GET"])
+@app.route("/api/v1/sign_up", methods=["POST", "GET"])
 def get_sign_up_form():
         if request.method == "GET":
             sign_up_form = '''
